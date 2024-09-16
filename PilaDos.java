@@ -1,6 +1,6 @@
 import java.util.Scanner;
-
-public class PilaDos {
+import java.util.Random;
+public class PilaUno {
     static int tope = 0;
     static int t = 0;
     static int opt = 0;
@@ -34,13 +34,16 @@ public class PilaDos {
                     eliminar();
                     break;
                 case 4:
+                    llenado(t,pila);
+                    break;
+                case 5:
                     System.out.println("Saliendo...");
                     break;
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
                     break;
             }
-        } while (opt != 4);
+        } while (opt != 5);
     }
 
     public static void menu(){
@@ -48,7 +51,8 @@ public class PilaDos {
                     + "1- Agregar valor a la pila\n"
                     + "2- Mostrar pila\n"
                     + "3- Eliminar valor de la pila\n"
-                    + "4- Salir\n");
+                    + "4- Llenado automatico\n"
+                    + "5- Salir\n");
     }
 
 
@@ -81,13 +85,30 @@ public class PilaDos {
         }
     }
 
-
     public static void eliminar(){
         if (tope == 0) {
             System.out.println("Error: la pila está vacía. No hay elementos para eliminar.");
         } else {
             tope--;
             System.out.println("Último valor eliminado.");
+        }
+    }
+
+    public static void llenado(int t, String[] pila){
+        if (tope >= t) {
+            System.out.println("Error: la pila está llena.");
+        }else{
+            Random random = new Random();
+            while (tope < t) {
+            String palabra = "";
+            int longitudPalabra = random.nextInt(1) +1;
+                for (int i = 0; i < longitudPalabra; i++) {
+                    char letra = (char) (random.nextInt(26) + 'a');
+                    palabra += letra;
+                }
+                pila[tope] = palabra;
+                tope++;
+            }
         }
     }
 }
