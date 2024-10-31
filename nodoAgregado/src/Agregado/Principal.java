@@ -17,7 +17,7 @@ public class Principal {
             teclado.next();
         }
         t = teclado.nextInt();
-        teclado.nextLine(); // Limpiar el buffer
+        teclado.nextLine();
 
         do {
             menu();
@@ -26,7 +26,7 @@ public class Principal {
                 teclado.next();
             }
             opt = teclado.nextInt();
-            teclado.nextLine(); // Limpiar el buffer
+            teclado.nextLine();
 
             switch (opt) {
                 case 1:
@@ -49,7 +49,7 @@ public class Principal {
                     String nuevoDato = teclado.nextLine();
                     System.out.print("Ingrese la posición donde agregarlo: ");
                     int posicion = teclado.nextInt();
-                    teclado.nextLine(); // Limpiar el buffer
+                    teclado.nextLine();
                     op.agregarE(nuevoDato, posicion);
                     break;
                 case 5:
@@ -63,7 +63,7 @@ public class Principal {
                     break;
             }
         } while (opt != 6);
-        teclado.close(); // Cerrar el escáner
+        teclado.close();
     }
 
     public static void menu() {

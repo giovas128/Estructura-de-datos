@@ -7,16 +7,16 @@ import java.awt.event.ActionListener;
 
 public class interfaz extends JFrame implements ActionListener {
     Color colorFondo;
-    JButton btnCrearLista, btnAgregar, btnMostrar, btnAgregarUltimo, btnAgregarPrimero, btnAgregarEspecial;
-    JTextField inputValor, inputPosicion;
+    JButton eliminarValorBtn, eliminarUltimoBtn, eliminarPrimeroBtn, btnCrearLista, btnAgregar, btnMostrar, btnAgregarUltimo, btnAgregarPrimero, btnAgregarEspecial;
+    JTextField inputValor, inputPosicion, valorField;
     JTextArea areaLista;
     boolean listaCreada = false;
-    Operaciones listaOperaciones; 
+    Operaciones listaOperaciones;
 
     public interfaz() {
         setTitle("INTERFAZ AGREGADO");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 450);
+        setSize(700, 450);
         setLocationRelativeTo(null);
         JPanel ventana = new JPanel();
         colorFondo = new Color(72, 201, 176);
@@ -29,13 +29,11 @@ public class interfaz extends JFrame implements ActionListener {
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
         ventana.add(lblTitulo);
 
-        // Botón para crear la lista
         btnCrearLista = new JButton("Crear Lista");
         btnCrearLista.setBounds(50, 80, 120, 30);
         btnCrearLista.addActionListener(this);
         ventana.add(btnCrearLista);
 
-        // Campo y botón para agregar valores a la lista
         JLabel lblValor = new JLabel("Valor a agregar:");
         lblValor.setBounds(50, 120, 100, 30);
         ventana.add(lblValor);
@@ -52,19 +50,18 @@ public class interfaz extends JFrame implements ActionListener {
         inputPosicion.setBounds(150, 160, 100, 30);
         ventana.add(inputPosicion);
 
-        // Botones para agregar en posiciones específicas
         btnAgregar = new JButton("Agregar");
         btnAgregar.setBounds(50, 200, 140, 30);
         btnAgregar.addActionListener(this);
         ventana.add(btnAgregar);
 
         btnAgregarPrimero = new JButton("Agregar Primero");
-        btnAgregarPrimero.setBounds(50, 280, 140, 30);
+        btnAgregarPrimero.setBounds(50, 240, 140, 30);
         btnAgregarPrimero.addActionListener(this);
         ventana.add(btnAgregarPrimero);
 
         btnAgregarUltimo = new JButton("Agregar Último");
-        btnAgregarUltimo.setBounds(50, 240, 140, 30);
+        btnAgregarUltimo.setBounds(50, 280, 140, 30);
         btnAgregarUltimo.addActionListener(this);
         ventana.add(btnAgregarUltimo);
 
@@ -73,8 +70,31 @@ public class interfaz extends JFrame implements ActionListener {
         btnAgregarEspecial.addActionListener(this);
         ventana.add(btnAgregarEspecial);
 
+        eliminarPrimeroBtn = new JButton("Eliminar Primero");
+        eliminarPrimeroBtn.setBounds(200, 200, 140, 30);
+        eliminarPrimeroBtn.addActionListener(this);
+        ventana.add(eliminarPrimeroBtn);
+
+        eliminarUltimoBtn = new JButton("Eliminar Último");
+        eliminarUltimoBtn.setBounds(200, 240, 140, 30);
+        eliminarUltimoBtn.addActionListener(this);
+        ventana.add(eliminarUltimoBtn);
+
+        JLabel lblEliminarValor = new JLabel("Valor a eliminar:");
+        lblEliminarValor.setBounds(200, 280, 100, 30);
+        ventana.add(lblEliminarValor);
+
+        valorField = new JTextField();
+        valorField.setBounds(300, 280, 100, 30);
+        ventana.add(valorField);
+
+        eliminarValorBtn = new JButton("Eliminar por Valor");
+        eliminarValorBtn.setBounds(200, 320, 140, 30);
+        eliminarValorBtn.addActionListener(this);
+        ventana.add(eliminarValorBtn);
+
         areaLista = new JTextArea();
-        areaLista.setBounds(300, 80, 150, 250);
+        areaLista.setBounds(450, 80, 150, 280);
         areaLista.setEditable(false);
         ventana.add(areaLista);
 
@@ -86,7 +106,7 @@ public class interfaz extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCrearLista) {
             listaCreada = true;
-            listaOperaciones = new Operaciones(); // Reiniciar lista
+            listaOperaciones = new Operaciones(); 
             JOptionPane.showMessageDialog(this, "Lista creada.");
             actualizarLista();
         } else if (listaCreada) {
@@ -108,6 +128,24 @@ public class interfaz extends JFrame implements ActionListener {
                     actualizarLista();
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Error: Posición no válida.");
+                }
+            } else if (e.getSource() == eliminarPrimeroBtn) {
+                listaOperaciones.eliminarPrimero();
+                JOptionPane.showMessageDialog(this, "El primer elemento ha sido eliminado.");
+                actualizarLista();
+            } else if (e.getSource() == eliminarUltimoBtn) {
+                listaOperaciones.eliminarUltimo();
+                JOptionPane.showMessageDialog(this, "El último elemento ha sido eliminado.");
+                actualizarLista();
+            } else if (e.getSource() == eliminarValorBtn) {
+                String eliminarValor = valorField.getText().trim();
+                if (!eliminarValor.isEmpty()) {
+                    listaOperaciones.eliminarPorValor(eliminarValor);
+                    valorField.setText("");
+                    JOptionPane.showMessageDialog(this, "El elemento " + eliminarValor + " ha sido eliminado.");
+                    actualizarLista();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error: Ingresa un valor a eliminar.");
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Error: Debes llenar el campo de valor.");

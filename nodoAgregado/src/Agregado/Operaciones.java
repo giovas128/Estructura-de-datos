@@ -87,4 +87,49 @@ public class Operaciones{
             System.out.println("Elemento agregado al principio: " + dato);
         }
     }
+
+    public void eliminarPrimero() {
+        if (inicio != null) {
+            inicio = inicio.siguiente; 
+        }
+    }
+
+    public void eliminarUltimo() {
+        if (inicio == null) {
+            return;  
+        }
+
+        if (inicio.siguiente == null) {
+            inicio = null; 
+            return;
+        }
+
+        Nodo temp = inicio;
+        while (temp.siguiente.siguiente != null) {
+            temp = temp.siguiente;  
+        }
+        temp.siguiente = null;  
+    }
+
+    public void eliminarPorValor(String valor) {
+        if (inicio == null) {
+            return;  
+        }
+    
+        
+        if (inicio.dato.equals(valor)) {
+            inicio = inicio.siguiente;  
+            return;
+        }
+    
+        Nodo temp = inicio;
+        
+        while (temp.siguiente != null && !temp.siguiente.dato.equals(valor)) {
+            temp = temp.siguiente;
+        }
+    
+        if (temp.siguiente != null) {
+            temp.siguiente = temp.siguiente.siguiente;  
+        }
+    }
 }
